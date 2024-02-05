@@ -6,7 +6,7 @@ const MultiplicationPage: React.FC<PageProps> = () => {
   const [buttonVal, setButtonVal] = useState(0);
   return (
 
-    <main>
+    <main className='p-5'>
       <h1>Hello</h1>
       <h1>Colorful Custom Button Components</h1>
       <Button 
