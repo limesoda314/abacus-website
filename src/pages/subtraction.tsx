@@ -118,7 +118,7 @@ const SubtractionPage: React.FC<PageProps> = () => {
         </div>
         <div className="p-5 w-full mx-auto max-w-sm grid grid-col-1 mb-6 bg-gray-100">
           <div className="bg-gray-200 m-5 p-2 flex justify-center">
-            {problems.val1[currProb-1]} + {problems.val2[currProb-1]}
+            {problems.val1[currProb-1]} - {problems.val2[currProb-1]}
           </div>
           <div className="flex justify-center">
           <Button
