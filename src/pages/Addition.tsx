@@ -1,33 +1,80 @@
-import React, { useState } from "react"
-import type { HeadFC, PageProps } from "gatsby"
-import Button from "./components/customButton"
+import React, { useState, useEffect } from "react";
+import type { HeadFC, PageProps } from "gatsby";
+import Button from "./components/customButton";
 
 const AdditionPage: React.FC<PageProps> = () => {
   const [digitVal, setDigitVal] = useState(0);
   const [currProb, setCurrProb] = useState(0);
-  const [numProb, setNumProb]   = useState(0); 
-  const [problems, setProblems] = useState([]); 
+  const [numProb, setNumProb] = useState(0);
+  const [problems, setProblems] = useState({
+    val1: [],
+    val2: [],
+    ans: [],
+  });
   const [showButtons, setShowButtons] = useState(false);
+  const [showAnswer, setShowAnswer]   = useState(false); 
+  const [buttonText, setButtonText]   = useState("Show Answer");
 
+  useEffect(() => {
+    if (problems.val1.length > 0) {
+      setShowButtons(true);
+    }
+  }, [problems]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-     // Extracting values from the form
-     const numDigits = parseInt((document.getElementById("numberDigits") as HTMLInputElement).value, 10);
-     const numProblems = parseInt((document.getElementById("numberProblems") as HTMLInputElement).value, 10);
- 
-     // Set the values and show the buttons
-     setDigitVal(numDigits);
-     setNumProb(numProblems);
-    //  setProblems() //need to make the problem array and make the problems
-     setCurrProb(1);
-     setShowButtons(true);
+    // Extracting values from the form
+    const numDigits = parseInt(
+      (document.getElementById("numberDigits") as HTMLInputElement).value,
+      10
+    );
+    const numProblems = parseInt(
+      (document.getElementById("numberProblems") as HTMLInputElement).value,
+      10
+    );
+
+    // Set the values and show the buttons
+    setDigitVal(numDigits);
+    setNumProb(numProblems);
+
+    const min = Math.pow(10, digitVal - 1);
+    const max = Math.pow(10, digitVal);
+
+    const generateProblemSet = () => {
+      const tempVal1 = Array.from({ length: numProb }, () =>
+        Math.floor(Math.random() * (max - min) + min)
+      );
+
+      const tempVal2 = Array.from({ length: numProb }, () =>
+        Math.floor(Math.random() * (max - min) + min)
+      );
+
+      const tempAns = tempVal1.map((val, index) => val + tempVal2[index]);
+
+      return { tempVal1, tempVal2, tempAns };
+    };
+
+    const { tempVal1, tempVal2, tempAns } = generateProblemSet();
+
+    setCurrProb(1);
+    setProblems({
+      ...problems,
+      val1: tempVal1,
+      val2: tempVal2,
+      ans: tempAns,
+    });
+
+    console.log(problems);
   };
 
   return (
     <main className='p-5'>
-    <h1>Addition</h1>
-    <h1>Pick Number of digits</h1>
+    
+    <div className="m-5 justify-center">
+      <h1>Addition</h1>
+      <h1>Pick Number of digits</h1>
+    </div>
+    
 
     {(showButtons === true) ? 
 
@@ -68,7 +115,32 @@ const AdditionPage: React.FC<PageProps> = () => {
                             </svg>}  
             />
         </div>
-        <div>
+        <div className="p-5 w-full mx-auto max-w-sm grid grid-col-1 mb-6 bg-gray-100">
+          <div className="bg-gray-200 m-5 p-2 flex justify-center">
+            {problems.val1[currProb-1]} + {problems.val2[currProb-1]}
+          </div>
+          <div className="flex justify-center">
+          <Button
+            border="none"
+            color="#BBDBDE"
+            height = "50px"
+            onClick={() => {
+              setShowAnswer(!showAnswer);
+              (showAnswer) ? setButtonText("Show Answer") : setButtonText("Hide Answer"); 
+            }}
+            radius = "5%"
+            width = "120px"
+            children = {buttonText}
+          />
+          </div>
+          {
+            (showAnswer === true) ? 
+            <div className="bg-gray-200 m-5 p-2 flex justify-center">
+              {problems.ans[currProb-1]}
+            </div> :
+            <div></div>
+          }
+          
         </div>
           
     </div>
@@ -81,11 +153,13 @@ const AdditionPage: React.FC<PageProps> = () => {
           <div className="grid grid-cols-1">
                 <div className="w-full">
                     <label htmlFor="number_of_digits" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of Digits</label>
+                    Number of Digits
                     <input type="number" id="numberDigits" placeholder="1" min="1" required
                         className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
                 </div>
                 <div className="w-full mb-4">
                     <label htmlFor="number_of_problems" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of Problems</label>
+                    Number of Problems
                     <input type="number" id="numberProblems" placeholder="10" min="1" required
                         className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" />
                 </div>
