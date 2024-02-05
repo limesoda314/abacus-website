@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import Button from "./components/customButton"
 
-const SubtractionPage: React.FC<PageProps> = () => {
+const DivisionPage: React.FC<PageProps> = () => {
   const [buttonVal, setButtonVal] = useState(0);
   return (
 
@@ -11,7 +11,7 @@ const SubtractionPage: React.FC<PageProps> = () => {
       <h1>Colorful Custom Button Components</h1>
       <Button 
         border="none"
-        color="purple"
+        color="blue"
         height = "200px"
         onClick={() => {setButtonVal(buttonVal+1)}}
         radius = "50%"
@@ -23,6 +23,6 @@ const SubtractionPage: React.FC<PageProps> = () => {
   )
 }
 
-export default SubtractionPage
+export default DivisionPage
 
-export const Head: HeadFC = () => <title>Subtraction Page</title>
+export const Head: HeadFC = () => <title>Division Page</title>

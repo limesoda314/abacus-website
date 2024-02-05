@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import Button from "./components/customButton"
+import { Link } from "gatsby"
 
-export default function Layout() {
+export default function Layout({children}) {
     const [showMenu, setShowMenu] = useState(1); 
     const testMenuItems = [
        {
@@ -9,19 +9,19 @@ export default function Layout() {
            title: 'Home',
        },
        {
-           href: 'addition',
+           href: '/Addition',
            title: 'addition',
        },
        {
-           href: 'subtraction',
+           href: '/Subtraction',
            title: 'subtraction',
        }, 
        {
-            href: 'multiplication',
+            href: '/Multiplication',
             title: 'multiplication',
        }, 
        {
-            href: 'division',
+            href: '/Division',
             title: 'division',
        }
    ];
@@ -37,9 +37,11 @@ export default function Layout() {
     }
 
    return (
+    <div>
        <div className='min-h-screen flex flex-col'>
+        
            <header className='z-50 bg-lime-600 text-white sticky top-0 h-14 flex justify-center items-center text-2xl font-semibold uppercase'>
-               Acabus Practice
+               Abacus Practice
            </header>
            <div className='flex flex-col md:flex-row flex-1'>
                <aside className='w-full h-min md:h-screen sticky z-20 inset-x-0 top-14 md:w-60 bg-lime-500'>
@@ -65,9 +67,9 @@ export default function Layout() {
                         <ul >
                             {testMenuItems.map(({ href, title }) => (
                                 <li className='m-2' key={title}>
-                                    <NavLink to={href} >
+                                    <Link to={href} >
                                         <p className={'hover:bg-lime-300 text-xl text-white '}>{title}</p>
-                                    </NavLink>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -77,16 +79,18 @@ export default function Layout() {
                    </nav>
                </aside> 
                <main className={'flex-1 h-full'}>
-                   <Outlet />
+                   {children}
                </main>
                
            </div>
            <footer className={"bg-lime-600 p-8 text-white flex inset-x-0 bottom-0 h-16 "}>
                 <p>
-                    Acabus practice 2024
+                    Abacus practice 2024
                 </p>
             </footer>
-       </div>
+        </div>
+
+    </div>
    );
 }
 

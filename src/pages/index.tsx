@@ -5,6 +5,7 @@ import Button from "./components/customButton"
 const IndexPage: React.FC<PageProps> = () => {
   const [buttonVal, setButtonVal] = useState(0);
   return (
+
     <main>
       <h1>Hello</h1>
       <h1>Colorful Custom Button Components</h1>
@@ -18,6 +19,7 @@ const IndexPage: React.FC<PageProps> = () => {
         children = {buttonVal}
       />
     </main>
+      
   )
 }
 
