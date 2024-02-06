@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import type { HeadFC, PageProps } from "gatsby";
-import Button from "./components/customButton";
+import Button from "./../components/customButton";
 
 const AdditionPage: React.FC<PageProps> = () => {
   const [digitVal, setDigitVal] = useState(0);
@@ -21,49 +21,41 @@ const AdditionPage: React.FC<PageProps> = () => {
     }
   }, [problems]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Extracting values from the form
-    const numDigits = parseInt(
-      (document.getElementById("numberDigits") as HTMLInputElement).value,
-      10
-    );
-    const numProblems = parseInt(
-      (document.getElementById("numberProblems") as HTMLInputElement).value,
-      10
-    );
-
-    // Set the values and show the buttons
-    setDigitVal(numDigits);
-    setNumProb(numProblems);
+  const generateProblemSet = useCallback(() => {
 
     const min = Math.pow(10, digitVal - 1);
     const max = Math.pow(10, digitVal);
 
-    const generateProblemSet = () => {
-      const tempVal1 = Array.from({ length: numProb }, () =>
-        Math.floor(Math.random() * (max - min) + min)
-      );
+    const tempVal1 = Array.from({ length: numProb }, () =>
+      Math.floor(Math.random() * (max - min) + min)
+    );
 
-      const tempVal2 = Array.from({ length: numProb }, () =>
-        Math.floor(Math.random() * (max - min) + min)
-      );
+    const tempVal2 = Array.from({ length: numProb }, () =>
+      Math.floor(Math.random() * (max - min) + min)
+    );
 
-      const tempAns = tempVal1.map((val, index) => val + tempVal2[index]);
+    const tempAns = tempVal1.map((val, index) => val + tempVal2[index]);
 
-      return { tempVal1, tempVal2, tempAns };
-    };
+    return { tempVal1, tempVal2, tempAns };
+  }, [digitVal, numProb]);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    // Extracting values from the form
+    const numDigits = parseInt((document.getElementById("numberDigits") as HTMLInputElement).value, 10);
+    const numProblems = parseInt((document.getElementById("numberProblems") as HTMLInputElement).value, 10);  
+    setDigitVal(numDigits);
+    setNumProb(numProblems);
 
     const { tempVal1, tempVal2, tempAns } = generateProblemSet();
 
     setCurrProb(1);
     setProblems({
-      ...problems,
       val1: tempVal1,
       val2: tempVal2,
       ans: tempAns,
-    });
-
+    })
     console.log(problems);
   };
 

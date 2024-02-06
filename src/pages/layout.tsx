@@ -10,19 +10,19 @@ export default function Layout({children}) {
        },
        {
            href: '/Addition',
-           title: 'addition',
+           title: 'Addition',
        },
        {
            href: '/Subtraction',
-           title: 'subtraction',
+           title: 'Subtraction',
        }, 
        {
             href: '/Multiplication',
-            title: 'multiplication',
+            title: 'Multiplication',
        }, 
        {
             href: '/Division',
-            title: 'division',
+            title: 'Division',
        }
    ];
 

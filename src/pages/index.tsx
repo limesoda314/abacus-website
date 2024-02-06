@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import type { HeadFC, PageProps } from "gatsby"
-import Button from "./components/customButton"
+import Button from "./../components/customButton"
 
 const IndexPage: React.FC<PageProps> = () => {
   const [buttonVal, setButtonVal] = useState(0);

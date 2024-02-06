@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { HeadFC, PageProps } from "gatsby";
-import Button from "./components/customButton";
+import Button from "./../components/customButton";
 
 const DivisionPage: React.FC<PageProps> = () => {
   const [digitVal1, setDigitVal1] = useState(0);

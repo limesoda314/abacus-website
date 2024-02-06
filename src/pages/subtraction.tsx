@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { HeadFC, PageProps } from "gatsby";
-import Button from "./components/customButton";
+import Button from "./../components/customButton";
 
 const SubtractionPage: React.FC<PageProps> = () => {
   const [digitVal, setDigitVal] = useState(0);
